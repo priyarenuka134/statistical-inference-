@@ -1,0 +1,52 @@
+---
+title: "statistical inference"
+author: "Renukaneeli"
+date: "6/2/2021"
+output: pdf_document
+---
+
+```{r}
+library(datasets)
+str(ToothGrowth)
+```
+
+```{r}
+data(ToothGrowth)
+head(ToothGrowth)
+```
+
+```{r}
+##Summary
+## We check if there are NA values and display the summary information for this dataset :
+
+sum(!complete.cases(ToothGrowth))
+summary(ToothGrowth)
+```
+
+
+Exploratory Analysis
+In this section, we will give a summary exploratory analysis
+
+```{r}
+library(ggplot2)
+ToothGrowth$dose <- as.factor(ToothGrowth$dose)
+p <- ggplot(ToothGrowth, aes(x=dose, y=len,fill=dose)) +  geom_boxplot() +  ggtitle("Fig. 1 : dispersion of tooth growth by dose") + xlab("dose in mg") + ylab("tooth length")
+p
+```
+
+```{r}
+p1 <- ggplot(ToothGrowth, aes(x=supp, y=len,fill=supp)) +  geom_boxplot() +  ggtitle("Dispersion of tooth growth by delivery method") + xlab("delivery method") + ylab("tooth length")
+p1
+```
+```{r}
+dose <- ToothGrowth$dose
+supp <- ToothGrowth$supp
+len <-  ToothGrowth$len
+
+t.test(len[supp == "VC"],len[supp == "OJ"], paired=FALSE)
+```
+
+
+```{r}
+t.test(len[dose == 0.5],len[dose == 1], paired=FALSE)
+```
